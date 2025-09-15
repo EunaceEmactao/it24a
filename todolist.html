@@ -7,6 +7,13 @@
 </head>
 <body>
     <h1>To Do List</h1>
+    <style>
+        .done {
+            text-decoration: line-through;
+            color: rgb(0, 255, 81);
+        }
+
+    </style>
 
     <input type="text"
     id ="taskInput"
@@ -63,6 +70,9 @@ function addTaskItem(taskText){
     const editBtn = createEditButton(li, taskSpan);
     li.appendChild(editBtn);
 
+    const doneBtn = createDoneButton(taskSpan);
+    li.appendChild(doneBtn);
+
 }
 
 function createDeleteButton(li){
@@ -112,6 +122,22 @@ if(newText !== null && newText.trim() !== ""){
 
 }
     
+function createDoneButton(taskSpan){
+
+    const doneBtn = document.createElement("button");
+    doneBtn.textContent = "Done";
+    doneBtn.onclick = () => {
+        const li = taskSpan.parentElement;
+console.log(li); 
+
+        taskSpan.classList.add("done");
+       
+       // const buttons = li.querySelectorAll("button");
+
+        console.log("Task Completed", taskSpan.textContent, Date());
+    }
+    return doneBtn;
+}
     
 
 </script>
