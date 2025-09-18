@@ -10,7 +10,7 @@
     <style>
         .done {
             text-decoration: line-through;
-            color: rgb(0, 255, 81);
+            color: rgb(14, 6, 255);
         }
 
     </style>
@@ -56,7 +56,11 @@ return text;
 
 function addTaskItem(taskText){
     const li = document.createElement("li");
-    li.textContent = taskText;
+    const taskSpan = document.createElement("span");
+    taskSpan.textContent = taskText;
+
+    li.appendChild(taskSpan);
+  
 
     document.getElementById("taskList").appendChild(li);
     console.log("addTaskItem() called ->: ", taskText, Date());
@@ -65,8 +69,7 @@ function addTaskItem(taskText){
     li.appendChild(deleteBtn);
 
 
-    const taskSpan = document.createElement("span");
-    taskSpan.textContent = taskText;
+
     const editBtn = createEditButton(li, taskSpan);
     li.appendChild(editBtn);
 
@@ -132,7 +135,10 @@ console.log(li);
 
         taskSpan.classList.add("done");
        
-       // const buttons = li.querySelectorAll("button");
+       const buttons = li.querySelectorAll("button");
+
+        buttons.forEach(btn => btn.remove());
+         
 
         console.log("Task Completed", taskSpan.textContent, Date());
     }
