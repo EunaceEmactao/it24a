@@ -17,9 +17,9 @@
 
 
 <style>
-    #map { height: 1000px; }
-popup-image {
-    max-width: 500px;
+    #map { height: 400px; }
+.popup-image {
+    max-width: 200px;
     height: auto; 
 }
 
@@ -32,6 +32,11 @@ popup-image {
  <div id="map"></div>
 </body>
 <script>    
+
+
+
+
+function initMap(mapDataUrl){ 
 //workinginstance=L. method=map
 var map = L.map('map').setView([8.360222282541791, 124.86802652488774], 17);
 
@@ -40,12 +45,26 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
+console.log("Map loaded" + Date());
 
-var marker = L.marker([8.360222282541791, 124.86802652488774,]).addTo(map);
-const dogeImage =" <img src= 'https://media.memix.com/memix-cat-couple-cups.webp?text=Personalize+your+Memix%0ALine+2' class='popup-image'>";
-const popupContent = `${dogeImage}<br><b>Hello world!</b><br>I am a popup.`;
+fetch(mapDataUrl)
+.then(response => response.json())
+.then(data =>{
+data.forEach(pin=>{
+const marker = L.marker([pin.lat,pin.lng]).addTo(map);
+const img = `<img src='${pin.img}' class="popup-image">`;
+marker.bindPopup(`${img}<br><b> ${pin.title} </b><br> ${pin.description}`) ;
 
-marker.bindPopup(popupContent).openPopup();
+console.log(`${pin.name} Loaded ` +Date());
+});
 
+})
+.catch(err=>console.error('Error loading JSON:',err));
+
+}
+document.addEventListener('DOMContentLoaded',()=> {
+initMap('maps.json');
+
+})
 </script>
 </html>
