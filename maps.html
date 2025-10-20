@@ -17,7 +17,12 @@
 
 
 <style>
-    #map { height: 400px; }
+    #map { height: 1000px; }
+popup-image {
+    max-width: 500px;
+    height: auto; 
+}
+
 </style>
 
 </head>
@@ -28,12 +33,19 @@
 </body>
 <script>    
 //workinginstance=L. method=map
-var map = L.map('map').setView(8.360222282541791, 124.86802652488774, 17);
+var map = L.map('map').setView([8.360222282541791, 124.86802652488774], 17);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
+
+
+var marker = L.marker([8.360222282541791, 124.86802652488774,]).addTo(map);
+const dogeImage =" <img src= 'https://media.memix.com/memix-cat-couple-cups.webp?text=Personalize+your+Memix%0ALine+2' class='popup-image'>";
+const popupContent = `${dogeImage}<br><b>Hello world!</b><br>I am a popup.`;
+
+marker.bindPopup(popupContent).openPopup();
 
 </script>
 </html>
