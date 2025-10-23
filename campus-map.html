@@ -17,7 +17,7 @@
 
 
 <style>
-    #map { height: 400px; }
+    #map { height: 800px; }
 .popup-image {
     max-width: 200px;
     height: auto; 
@@ -44,7 +44,8 @@ const openStreetMap = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.pn
 });
 
 //Satellite Layer
-const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{x}/{y}', {
+const satellite = L.tileLayer(
+'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
   attribution:'Tiles (c) Esri - Source: Esri, Maxar, Earthstar, Geographics, GIS User Community'
 
 });
