@@ -33,6 +33,30 @@
 </body>
 <script>    
 
+function initMap(mapDataUrl){ 
+//workinginstance=L. method=map 
+const map = L.map('map').setView([8.3603, 124.8684], 17);
 
+//OpenStreetMap Layer
+const openStreetMap = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; OpenStreetMap contributors'
+});
+
+//Satellite Layer
+const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{x}/{y}', {
+  attribution:'Tiles (c) Esri - Source: Esri, Maxar, Earthstar, Geographics, GIS User Community'
+
+});
+
+openStreetMap.addTo(map); //Default Layer
+console.log("Base map tile layer loaded" + Date());
+
+}
+//define the event
+
+document.addEventListener('DOMContentLoaded', ()=> {
+    initMap('');
+});
 </script>
 </html>
