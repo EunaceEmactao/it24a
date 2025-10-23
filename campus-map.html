@@ -52,11 +52,50 @@ const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/servi
 openStreetMap.addTo(map); //Default Layer
 console.log("Base map tile layer loaded" + Date());
 
+const markerGroups = {};
+
+fetch(mapDataUrl)
+.then(response => response.json())
+.then(data =>{
+data.forEach(pin=>{
+    const type  = pin.locationType || 'Other';
+    
+    //create marker group if it doesn't exist
+    if (!markerGroups[type]) {
+        markerGroups[type] = L.layerGroup();
+    }
+
+    //Marker and Popup
+    const marker = L.marker([pin.lat,pin.lng]).addTo(map);
+const img = `<img src='${pin.img}' class="popup-image">`;
+marker.bindPopup(`${img}<br><b> ${pin.title} </b><br> ${pin.description}`) ;
+
+console.log(`${pin.name} Loaded ` +Date());
+    markerGroups[type].addLayer(marker);
+});
+
+Object.values(markerGroups).forEach(group => group.addTo(map));
+
+    //layer controls
+    const baseMaps = {
+        "OpenStreetMap": openStreetMap,
+        "Satellite": satellite
+        
+    }
+    const overlayMaps = {};
+    Object.keys(markerGroups).forEach(type => {
+        overlayMaps[type] = markerGroups[type];
+});
+L.control.layers(baseMaps,overlayMaps,{collapsed:false}).addTo(map); 
+
+})
+
+.catch(err => console.error('Error loading JSON', err));l
 }
 //define the event
 
 document.addEventListener('DOMContentLoaded', ()=> {
-    initMap('');
+    initMap('campus-map.json');
 });
 </script>
 </html>
